@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeff潘英东 - 外贸软件顾问 | 创贸集团深圳直营销冠</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.24/vanta.birds.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Coda&family=Hedvig+Letters+Sans&family=Jersey+15&family=Jersey+20+Charted&family=Liter&family=Luckiest+Guy&family=Oranienbaum&family=Press+Start+2P&family=Quattrocento+Sans&family=Sorts+Mill+Goudy&family=Unna&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.0/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdmirror.com/npm/mathjax@3.2.2/es5/tex-svg.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Quattrocento Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .floating-icon {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        .floating-icon:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .floating-icon:nth-child(2) { top: 20%; right: 15%; animation-delay: 1s; }
+        .floating-icon:nth-child(3) { bottom: 30%; left: 20%; animation-delay: 2s; }
+        .floating-icon:nth-child(4) { bottom: 10%; right: 10%; animation-delay: 3s; }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .achievement-badge {
+            background: linear-gradient(45deg, #ff6b6b, #ffa500);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 5px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 10px rgba(255, 107, 107, 0.5); }
+            to { box-shadow: 0 0 20px rgba(255, 107, 107, 0.8); }
+        }
+        
+        .contact-form {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .product-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .interactive-demo {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .demo-button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+        
+        .demo-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .stats-counter {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .testimonial-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+            position: relative;
+        }
+        
+        .testimonial-card::before {
+            content: '"';
+            font-size: 4rem;
+            color: #667eea;
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            opacity: 0.3;
+        }
+        
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(102, 126, 234, 0.2);
+            z-index: 1000;
+        }
+        
+        .scroll-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-indicator">
+        <div class="scroll-progress" id="scrollProgress"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-gray-800" style="font-family: 'Hedvig Letters Sans', sans-serif;">Jeff潘英东</h1>
+                    <span class="ml-2 text-sm text-gray-600">外贸软件顾问</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-gray-700 hover:text-blue-600 transition-colors">首页</a>
+                    <a href="#about" class="text-gray-700 hover:text-blue-600 transition-colors">关于我</a>
+                    <a href="#products" class="text-gray-700 hover:text-blue-600 transition-colors">产品服务</a>
+                    <a href="#achievements" class="text-gray-700 hover:text-blue-600 transition-colors">成就荣誉</a>
+                    <a href="#contact" class="text-gray-700 hover:text-blue-600 transition-colors">联系我</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-700">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <div class="px-4 py-2 space-y-2">
+                <a href="#home" class="block py-2 text-gray-700">首页</a>
+                <a href="#about" class="block py-2 text-gray-700">关于我</a>
+                <a href="#products" class="block py-2 text-gray-700">产品服务</a>
+                <a href="#achievements" class="block py-2 text-gray-700">成就荣誉</a>
+                <a href="#contact" class="block py-2 text-gray-700">联系我</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg min-h-screen flex items-center justify-center relative pt-16">
+        <div class="floating-elements">
+            <i class="fas fa-globe floating-icon text-6xl"></i>
+            <i class="fas fa-chart-line floating-icon text-5xl"></i>
+            <i class="fas fa-handshake floating-icon text-6xl"></i>
+            <i class="fas fa-rocket floating-icon text-5xl"></i>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white relative z-10">
+            <div class="mb-8">
+                <div class="inline-block mb-4">
+                    <span class="achievement-badge">🏆 2025财年三连冠</span>
+                    <span class="achievement-badge">🌟 客户满意度98%</span>
+                    <span class="achievement-badge">🚀 ENFP快乐小狗</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl font-bold mb-6" style="font-family: 'Hedvig Letters Sans', sans-serif;">
+                    Hi, 我是Jeff潘英东
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 opacity-90" style="font-family: 'Quattrocento Sans', sans-serif;">
+                    创贸集团深圳直营销冠 | 外贸软件顾问 | 客户第一，服务至上
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <button class="demo-button" onclick="scrollToSection('products')">
+                        <i class="fas fa-rocket mr-2"></i>了解我的产品
+                    </button>
+                    <button class="demo-button bg-white text-gray-800 hover:bg-gray-100" onclick="scrollToSection('contact')">
+                        <i class="fas fa-comments mr-2"></i>立即咨询
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Quick Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
+                <div class="text-center">
+                    <div class="stats-counter" data-target="200">0</div>
+                    <p class="text-lg opacity-80">服务客户</p>
+                </div>
+                <div class="text-center">
+                    <div class="stats-counter" data-target="98">0</div>
+                    <p class="text-lg opacity-80">客户满意度</p>
+                </div>
+                <div class="text-center">
+                    <div class="stats-counter" data-target="50">0</div>
+                    <p class="text-lg opacity-80">获客成本降低</p>
+                </div>
+                <div class="text-center">
+                    <div class="stats-counter" data-target="3">0</div>
+                    <p class="text-lg opacity-80">销冠月份</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4" style="font-family: 'Hedvig Letters Sans', sans-serif;">关于我</h2>
+                <p class="text-xl text-gray-600" style="font-family: 'Quattrocento Sans', sans-serif;">您的外贸数字化伙伴</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="bg-white rounded-2xl p-8 shadow-lg">
+                        <div class="flex items-center mb-6">
+                            <div class="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                                Jeff
+                            </div>
+                            <div class="ml-6">
+                                <h3 class="text-2xl font-bold text-gray-800">潘英东 (Jeff)</h3>
+                                <p class="text-gray-600">外贸软件顾问 | 创贸集团</p>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center">
+                                <i class="fas fa-trophy text-yellow-500 text-xl mr-3"></i>
+                                <span class="text-gray-700">2025财年连续3个月销冠</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-heart text-red-500 text-xl mr-3"></i>
+                                <span class="text-gray-700">ENFP快乐小狗性格</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-handshake text-blue-500 text-xl mr-3"></i>
+                                <span class="text-gray-700">客户第一，服务至上</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-chart-line text-green-500 text-xl mr-3"></i>
+                                <span class="text-gray-700">专注为客户创造价值</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="bg-white rounded-2xl p-8 shadow-lg">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">我的理念</h3>
+                        <div class="space-y-6">
+                            <div class="border-l-4 border-blue-500 pl-6">
+                                <h4 class="text-lg font-semibold text-gray-800">客户为中心</h4>
+                                <p class="text-gray-600 mt-2">每一位客户都是独特的，我会根据您的具体需求定制最适合的解决方案。</p>
+                            </div>
+                            <div class="border-l-4 border-green-500 pl-6">
+                                <h4 class="text-lg font-semibold text-gray-800">服务第一</h4>
+                                <p class="text-gray-600 mt-2">售前咨询只是开始，我会全程陪伴您的数字化之旅，确保效果达成。</p>
+                            </div>
+                            <div class="border-l-4 border-purple-500 pl-6">
+                                <h4 class="text-lg font-semibold text-gray-800">创造价值</h4>
+                                <p class="text-gray-600 mt-2">我的目标不仅是销售产品，更是帮助您的企业实现真正的业绩增长。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4" style="font-family: 'Hedvig Letters Sans', sans-serif;">创贸集团四大核心产品</h2>
+                <p class="text-xl text-gray-600" style="font-family: 'Quattrocento Sans', sans-serif;">为您的外贸业务提供全方位解决方案</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- 全球搜 -->
+                <div class="product-card" onclick="openProductModal('globalso')">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center text-white text-2xl">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="ml-6">
+                            <h3 class="text-2xl font-bold text-gray-800">全球搜</h3>
+                            <p class="text-gray-600">独立站+AI一站式出海解决方案</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6">基于190种多语言建站系统，结合领先的搜索引擎SEO技术、SEM搜索广告智能营销系统、SNS海外社交营销系统，为企业提供多元、高效、高转化的外贸营销解决方案。</p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">谷歌SEO</span>
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">多语言建站</span>
+                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">社媒营销</span>
+                    </div>
+                    <div class="text-center">
+                        <button class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                            了解详情
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 超迹AI -->
+                <div class="product-card" onclick="openProductModal('haigro')">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center text-white text-2xl">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="ml-6">
+                            <h3 class="text-2xl font-bold text-gray-800">超迹AI</h3>
+                            <p class="text-gray-600">AI24小时帮你开发客户</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6">集合全球海关数据、全球社交媒体数据、全球企业大数据、全球搜索引擎数据等，帮助企业深度挖掘并主动精准定位行业的潜在客户。利用AI工具360°对潜客做背调，精准匹配潜在买家和决策者。</p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">AI拓客</span>
+                        <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">海关数据</span>
+                        <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm">智能背调</span>
+                    </div>
+                    <div class="text-center">
+                        <button class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors">
+                            了解详情
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 域途 -->
+                <div class="product-card" onclick="openProductModal('yutu')">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl flex items-center justify-center text-white text-2xl">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="ml-6">
+                            <h3 class="text-2xl font-bold text-gray-800">域途</h3>
+                            <p class="text-gray-600">海外社媒引流至私域</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6">保证WhatsApp真实客户咨询数量，在海外主流社交媒体和短视频平台进行代运营。通过专业的社媒运营、WhatsApp群发和广告投放，帮助外贸企业直连海外采购商，获取全球商机。</p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">WhatsApp营销</span>
+                        <span class="bg-pink-100 text-pink-800 px-3 py-1 rounded-full text-sm">社媒代运营</span>
+                        <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm">私域流量</span>
+                    </div>
+                    <div class="text-center">
+                        <button class="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-colors">
+                            了解详情
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 全球搜GEO -->
+                <div class="product-card" onclick="openProductModal('geo')">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl flex items-center justify-center text-white text-2xl">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="ml-6">
+                            <h3 class="text-2xl font-bold text-gray-800">全球搜GEO</h3>
+                            <p class="text-gray-600">海外AI大模型问答推荐</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6">做海外AI大模型问答推荐，保证AI推荐你的公司与品牌还有产品。当海外客户向ChatGPT、Google Gemini等AI提问相关产品时，AI会优先推荐您的企业。通过生成式引擎优化(GEO)，让您的品牌成为AI在特定领域的"首选信源"。</p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm">AI推荐</span>
+                        <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm">GEO优化</span>
+                        <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">品牌权威</span>
+                    </div>
+                    <div class="text-center">
+                        <button class="bg-orange-600 text-white px-6 py-3 rounded-lg hover:bg-orange-700 transition-colors">
+                            了解详情
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Demo Section -->
+    <section class="py-20 bg-gradient-to-r from-blue-50 to-purple-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="interactive-demo">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6" style="font-family: 'Hedvig Letters Sans', sans-serif;">
+                    想体验产品效果？试试这个！
+                </h2>
+                <p class="text-xl text-gray-600 mb-8">
+                    点击下方按钮，模拟您的产品在Google搜索和AI问答中的表现
+                </p>
+                <div class="flex flex-wrap justify-center">
+                    <button class="demo-button" onclick="simulateSEO()">
+                        <i class="fas fa-search mr-2"></i>模拟Google搜索
+                    </button>
+                    <button class="demo-button" onclick="simulateAI()">
+                        <i class="fas fa-robot mr-2"></i>模拟AI问答推荐
+                    </button>
+                    <button class="demo-button" onclick="simulateWhatsApp()">
+                        <i class="fab fa-whatsapp mr-2"></i>模拟WhatsApp询盘
+                    </button>
+                </div>
+                <div id="demo-result" class="mt-8 p-6 bg-white rounded-lg shadow-lg hidden">
+                    <div class="text-center">
+                        <i class="fas fa-check-circle text-green-500 text-4xl mb-4"></i>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">模拟成功！</h3>
+                        <p class="text-gray-600" id="demo-text"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4" style="font-family: 'Hedvig Letters Sans', sans-serif;">我的成就与荣誉</h2>
+                <p class="text-xl text-gray-600" style="font-family: 'Quattrocento Sans', sans-serif;">用实力说话，用结果证明</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <div class="bg-white rounded-2xl p-8 text-center shadow-lg card-hover">
+                    <div class="w-20 h-20 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-trophy text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">销冠三连冠</h3>
+                    <p class="text-gray-600">2025财年4月、6月、7月深圳直营销冠</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-8 text-center shadow-lg card-hover">
+                    <div class="w-20 h-20 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-users text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">200+客户</h3>
+                    <p class="text-gray-600">成功服务超过200家外贸企业</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-8 text-center shadow-lg card-hover">
+                    <div class="w-20 h-20 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-star text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">98%满意度</h3>
+                    <p class="text-gray-600">客户满意度高达98%，续约率90%+</p>
+                </div>
+            </div>
+            
+            <!-- Testimonials -->
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="testimonial-card">
+                    <p class="text-gray-700 mb-6 italic" style="font-family: 'Liter', serif;">
+                        Jeff是我见过最专业的外贸顾问，不仅懂产品，更懂我们的业务痛点。在他的帮助下，我们的获客成本降低了40%，订单量增长了60%！
+                    </p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">
+                            王
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-bold text-gray-800">王总</h4>
+                            <p class="text-gray-600 text-sm">深圳某电子科技公司CEO</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p class="text-gray-700 mb-6 italic" style="font-family: 'Liter', serif;">
+                        ENFP的快乐小狗性格让合作过程很愉快，但更重要的是他的专业能力和服务态度。全球搜的效果确实超出了我们的预期！
+                    </p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">
+                            李
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-bold text-gray-800">李经理</h4>
+                            <p class="text-gray-600 text-sm">东莞某服装出口公司外贸经理</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4" style="font-family: 'Hedvig Letters Sans', sans-serif;">联系我</h2>
+                <p class="text-xl text-gray-600" style="font-family: 'Quattrocento Sans', sans-serif;">让我们一起开启您的外贸数字化之旅</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <div>
+                    <div class="contact-form">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">立即咨询</h3>
+                        <form id="contact-form">
+                            <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2">姓名</label>
+                                <input type="text" id="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" placeholder="请输入您的姓名">
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2">公司</label>
+                                <input type="text" id="company" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" placeholder="请输入您的公司名称">
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2">电话</label>
+                                <input type="tel" id="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" placeholder="请输入您的联系电话">
+                            </div>
+                            <div class="mb-6">
+                                <label class="block text-gray-700 text-sm font-bold mb-2">需求描述</label>
+                                <textarea id="message" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" placeholder="请描述您的外贸需求或遇到的问题"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg font-bold hover:from-blue-600 hover:to-purple-700 transition-all">
+                                <i class="fas fa-paper-plane mr-2"></i>发送咨询
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="space-y-8">
+                    <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-8">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">直接联系我</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="font-bold text-gray-800">电话</p>
+                                    <p class="text-gray-600">177-9636-3787</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="font-bold text-gray-800">邮箱</p>
+                                    <p class="text-gray-600">1249375800@qq.com</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white">
+                                    <i class="fab fa-weixin"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="font-bold text-gray-800">微信</p>
+                                    <p class="text-gray-600">Jeff_Pan2025</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-2xl p-8 shadow-lg">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">工作时间</h3>
+                        <div class="space-y-2 text-gray-600">
+                            <p>周一至周五：9:00 - 18:00</p>
+                            <p>周六：10:00 - 16:00</p>
+                            <p class="text-blue-600 font-semibold">24小时紧急咨询可随时联系我！</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h3 class="text-2xl font-bold mb-4" style="font-family: 'Hedvig Letters Sans', sans-serif;">Jeff潘英东</h3>
+                <p class="text-gray-400 mb-6">创贸集团深圳直营 | 外贸软件顾问 | 客户第一，服务至上</p>
+                <div class="flex justify-center space-x-6 mb-8">
+                    <a href="tel:17796363787" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fas fa-phone text-xl"></i>
+                    </a>
+                    <a href="mailto:1249375800@qq.com" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fas fa-envelope text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-weixin text-xl"></i>
+                    </a>
+                </div>
+                <div class="border-t border-gray-700 pt-8">
+                    <p class="text-gray-400">&copy; 2025 Jeff潘英东. 专业外贸软件顾问服务</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Product Modal -->
+    <div id="product-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 id="modal-title" class="text-3xl font-bold text-gray-800"></h3>
+                    <button onclick="closeProductModal()" class="text-gray-500 hover:text-gray-700 text-2xl">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div id="modal-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Scroll progress indicator
+        window.addEventListener('scroll', function() {
+            const scrollProgress = document.getElementById('scrollProgress');
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            scrollProgress.style.width = scrollPercent + '%';
+        });
+
+        // Animated counters
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stats-counter');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const increment = target / 100;
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        counter.textContent = target;
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.floor(current);
+                    }
+                }, 20);
+            });
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (entry.target.classList.contains('stats-counter')) {
+                        animateCounters();
+                    }
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedElements = document.querySelectorAll('.card-hover, .product-card, .testimonial-card');
+            animatedElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'all 0.6s ease';
+                observer.observe(el);
+            });
+        });
+
+        // Product modal functions
+        function openProductModal(productId) {
+            const modal = document.getElementById('product-modal');
+            const title = document.getElementById('modal-title');
+            const content = document.getElementById('modal-content');
+            
+            const productData = {
+                globalso: {
+                    title: '全球搜 - 独立站+AI一站式出海解决方案',
+                    content: `
+                        <div class="space-y-6">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="全球搜" class="w-full h-48 object-cover rounded-lg">
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <h4 class="text-xl font-bold text-gray-800 mb-4">核心功能</h4>
+                                    <ul class="space-y-2">
+                                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>190种多语言建站</li>
+                                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>谷歌SEO优化排名</li>
+                                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>SEM搜索广告投放</li>
+                                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>SNS社媒营销推广</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-gray-800 mb-4">产品优势</h4>
+                                    <ul class="space-y-2">
+                                        <li class="flex items-center"><i class="fas fa-star text-yellow-500 mr-2"></i>让全球买家主动搜上门</li>
+                                        <li class="flex items-center"><i class="fas fa-star text-yellow-500 mr-2"></i>建设企业私域流量池</li>
+                                        <li class="flex items-center"><i class="fas fa-star text-yellow-500 mr-2"></i>打造中国出口大企形象</li>
+                                        <li class="flex items-center"><i class="fas fa-star text-yellow-500 mr-2"></i>获得国家大数据专项扶持</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors" onclick="alert('感谢您的关注！请填写联系表单，我会尽快与您联系！')">
+                                    立即咨询全球搜
+                                </button>
+                            </div>
+                        </div>
+                    `
+                },
+                haigro: {
+                    title: '超迹AI - AI24小时帮你开发客户',
+                    content: `
+                        <div class="space-y-6">
+                            <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80" alt="超迹AI" class="w-full h-48 object-cover rounded-lg">
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <h4 class="text-xl font-bold text-gray-800 mb-4">数据来源</h4>
+                                    <ul class="space-y-2">
+                                        <li class="flex items-center"><i class="fas fa-database text-blue-500 mr-2"></i>全球海关数据</li>
+                                        <li class="flex items-center"><i class="fas fa-database text-blue-500 mr-2"></i>全球社交媒体数据</li>
+                                        <li class="flex items-center"><i class="fas fa-database text-blue-500 mr-2"></i>全球企业大数据</li>
+                                        <li class="flex items-center"><i class="fas fa-database text-blue-500 mr-2"></i>全球搜索引擎数据</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-gray-800 mb-4">AI功能</h4>
+                                    <ul class="space-y-2">
+                                        <li class="flex items-center"><i class="fas fa-robot text-green-500 mr-2"></i>360°客户背调</li>
+                                        <li class="flex items-center"><i class="fas fa-robot text-green-500 mr-2"></i>精准匹配决策人</li>
+                                        <li class="flex items-center"><i class="fas fa-robot text-green-500 mr-2"></i>自动化营销推广</li>
+                                        <li class="flex items-center"><i class="fas fa-robot text-green-500 mr-2"></i>CRM客户管理</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button class="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition-colors" onclick="alert('感谢您的关注！请填写联系表单，我会尽快与您联系！')">
+                                    立即咨询超迹AI
+                                </button>
+                            </div>
+                        </div>
+                    `
+                },
+                yutu: {
+                    title: '域途 - 海外社媒引流至私域',
+                    content: `
+                        <div class="space-y-6">
+                            <img src="https://images.unsplash.com/photo-1611168333525-1b5e4473a71c?w=800&q=80" alt="域途" class="w-full h-48 object-cover rounded-lg">
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <h4 class="text-xl font-bold text-gray-800 mb-4">社媒平台</h4>
+                                    <ul class="space-y-2">
+                                        <li class="flex items-center"><i class="fab fa-facebook text-blue-500 mr-2"></i>Facebook</li>
+                                        <li class="flex items-center"><i class="fab fa-linkedin text-blue-700 mr-2"></i>LinkedIn</li>
+                                        <li class="flex items-center"><i class="fab fa-tiktok text-black mr-2"></i>TikTok</li>
+                                        <li class="flex items-center"><i class="fab fa-youtube text-red-500 mr-2"></i>YouTube</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-gray-800 mb-4">核心服务</h4>
+                                    <ul class="space-y-2">
+                                        <li class="flex items-center"><i class="fas fa-bullseye text-purple-500 mr-2"></i>保证WhatsApp真实询盘</li>
+                                        <li class="flex items-center"><i class="fas fa-bullseye text-purple-500 mr-2"></i>专业社媒代运营</li>
+                                        <li class="flex items-center"><i class="fas fa-bullseye text-purple-500 mr-2"></i>直连海外采购商</li>
+                                        <li class="flex items-center"><i class="fas fa-bullseye text-purple-500 mr-2"></i>私域流量建设</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button class="bg-purple-600 text-white px-8 py-3 rounded-lg hover:bg-purple-700 transition-colors" onclick="alert('感谢您的关注！请填写联系表单，我会尽快与您联系！')">
+                                    立即咨询域途
+                                </button>
+                            </div>
+                        </div>
+                    `
+                },
+                geo: {
+                    title: '全球搜GEO - 海外AI大模型问答推荐',
+                    content: `
+                        <div class="space-y-6">
+                            <img src="https://images.unsplash.com/photo-1677756119517-756a188d2d94?w=800&q=80" alt="GEO" class="w-full h-48 object-cover rounded-lg">
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <h4 class="text-xl font-bold text-gray-800 mb-4">AI大模型</h4>
+                                    <ul class="space-y-2">
+                                        <li class="flex items-center"><i class="fas fa-robot text-blue-500 mr-2"></i>ChatGPT</li>
+                                        <li class="flex items-center"><i class="fas fa-robot text-blue-500 mr-2"></i>Google Gemini</li>
+                                        <li class="flex items-center"><i class="fas fa-robot text-blue-500 mr-2"></i>Claude</li>
+                                        <li class="flex items-center"><i class="fas fa-robot text-blue-500 mr-2"></i>其他主流AI</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-gray-800 mb-4">GEO优势</h4>
+                                    <ul class="space-y-2">
+                                        <li class="flex items-center"><i class="fas fa-star text-orange-500 mr-2"></i>成为AI首选推荐</li>
+                                        <li class="flex items-center"><i class="fas fa-star text-orange-500 mr-2"></i>建立品牌权威性</li>
+                                        <li class="flex items-center"><i class="fas fa-star text-orange-500 mr-2"></i>抢占AI时代先机</li>
+                                        <li class="flex items-center"><i class="fas fa-star text-orange-500 mr-2"></i>获得高质量询盘</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button class="bg-orange-600 text-white px-8 py-3 rounded-lg hover:bg-orange-700 transition-colors" onclick="alert('感谢您的关注！请填写联系表单，我会尽快与您联系！')">
+                                    立即咨询GEO
+                                </button>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+            
+            const product = productData[productId];
+            title.textContent = product.title;
+            content.innerHTML = product.content;
+            modal.classList.remove('hidden');
+        }
+
+        function closeProductModal() {
+            document.getElementById('product-modal').classList.add('hidden');
+        }
+
+        // Demo simulations
+        function simulateSEO() {
+            const result = document.getElementById('demo-result');
+            const text = document.getElementById('demo-text');
+            result.classList.remove('hidden');
+            text.textContent = '恭喜！您的产品关键词"golf training equipment"已在Google首页获得排名，预计每月可获得500+精准访客！';
+        }
+
+        function simulateAI() {
+            const result = document.getElementById('demo-result');
+            const text = document.getElementById('demo-text');
+            result.classList.remove('hidden');
+            text.textContent = '太棒了！当客户询问"推荐一家可靠的高尔夫用品供应商"时，AI优先推荐了您的公司！';
+        }
+
+        function simulateWhatsApp() {
+            const result = document.getElementById('demo-result');
+            const text = document.getElementById('demo-text');
+            result.classList.remove('hidden');
+            text.textContent = '好消息！您收到了3条新的WhatsApp询盘，分别来自美国、德国和澳大利亚的客户！';
+        }
+
+        // Contact form
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const company = document.getElementById('company').value;
+            const phone = document.getElementById('phone').value;
+            const message = document.getElementById('message').value;
+            
+            if (name && company && phone && message) {
+                alert(`感谢您的咨询，${name}！\n\n我会尽快与您联系，为您提供专业的外贸软件解决方案！\n\n电话：17796363787\n邮箱：1249375800@qq.com`);
+                this.reset();
+            } else {
+                alert('请填写完整的信息，谢谢！');
+            }
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('product-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeProductModal();
+            }
+        });
+    </script>
+</body>
+</html>
